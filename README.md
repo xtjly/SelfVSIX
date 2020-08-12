@@ -1,0 +1,2 @@
+# SelfVSIX
+VS插件

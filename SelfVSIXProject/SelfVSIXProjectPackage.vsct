@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!--  This is the file that defines the actual layout and type of the commands.
+        It is divided in different sections (e.g. command definition, command
+        placement, ...), with each defining a specific set of properties.
+        See the comment before each section for more details about how to
+        use it. -->
+
+  <!--  The VSCT compiler (the tool that translates this file into the binary
+        format that VisualStudio will consume) has the ability to run a preprocessor
+        on the vsct file; this preprocessor is (usually) the C++ preprocessor, so
+        it is possible to define includes and macros with the same syntax used
+        in C++ files. Using this ability of the compiler here, we include some files
+        defining some of the constants that we will use inside the file. -->
+
+  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
+  <Extern href="stdidcmd.h" />
+
+  <!--This header contains the command ids for the menus provided by the shell. -->
+  <Extern href="vsshlids.h" />
+
+  <!--The Commands section is where commands, menus, and menu groups are defined.
+      This section uses a Guid to identify the package that provides the command defined inside it. -->
+  <Commands package="guidSelfVSIXProjectPackage">
+    <!-- Inside this section we have different sub-sections: one for the menus, another
+    for the menu groups, one for the buttons (the actual commands), one for the combos
+    and the last one for the bitmaps used. Each element is identified by a command id that
+    is a unique pair of guid and numeric identifier; the guid part of the identifier is usually
+    called "command set" and is used to group different command inside a logically related
+    group; your package should define its own command set in order to avoid collisions
+    with command ids defined by other packages. -->
+
+    <!-- In this section you can define new menu groups. A menu group is a container for
+         other menus or buttons (commands); from a visual point of view you can see the
+         group as the part of a menu contained between two lines. The parent of a group
+         must be a menu. -->
+    <Groups>
+      <Group guid="guidSelfVSIXProjectPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+        <!--  父级菜单所在位置：
+              IDM_VS_MENU_TOOLS         默认菜单工具栏   
+              IDM_VS_CTXT_CODEWIN       代码文件,如.cs文件在编辑器中点右键(上下文右键)
+              IDM_VS_CTXT_FOLDERNODE    在文件夹上点右键
+              IDM_VS_CTXT_ITEMNODE      在项目中的文件上点右键
+              IDM_VS_CTXT_NOCOMMANDS    没有菜单
+              IDM_VS_CTXT_PROJNODE      在项目节点上点右键
+              IDM_VS_CTXT_SOLNNODE      在解决方案上点右键
+              具体介绍官网：https://docs.microsoft.com/zh-cn/visualstudio/extensibility/internals/guids-and-ids-of-visual-studio-menus?view=vs-2019
+              <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+        -->
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+      </Group>
+      <Group guid="guidSelfVSIXProjectPackageCmdSet1" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+      </Group>
+      <Group guid="guidSelfVSIXProjectPackageCmdSet2" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+      </Group>
+      <Group guid="guidSelfVSIXProjectPackageCmdSet3" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+      </Group>
+    </Groups>
+
+    <!--Buttons section. -->
+    <!--This section defines the elements the user can interact with, like a menu command or a button
+        or combo box in a toolbar. -->
+    <Buttons>
+      <!--To define a menu group you have to specify its ID, the parent menu and its display priority.
+          The command is visible and enabled by default. If you need to change the visibility, status, etc, you can use
+          the CommandFlag node.
+          You can add more than one CommandFlag node e.g.:
+              <CommandFlag>DefaultInvisible</CommandFlag>
+              <CommandFlag>DynamicVisibility</CommandFlag>
+          If you do not want an image next to your command, remove the Icon node /> -->
+      <Button guid="guidSelfVSIXProjectPackageCmdSet" id="SelfCommand1Id" priority="0x0100" type="Button">
+        <Parent guid="guidSelfVSIXProjectPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <!--  显示的名称  -->
+          <ButtonText>正则匹配</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSelfVSIXProjectPackageCmdSet1" id="cmdidSelfCommand2" priority="0x0100" type="Button">
+        <Parent guid="guidSelfVSIXProjectPackageCmdSet1" id="MyMenuGroup" />
+        <Icon guid="guidImages1" id="bmpPic1" />
+        <Strings>
+          <ButtonText>字符串长度</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSelfVSIXProjectPackageCmdSet2" id="cmdidSelfCommand3" priority="0x0100" type="Button">
+        <Parent guid="guidSelfVSIXProjectPackageCmdSet2" id="MyMenuGroup" />
+        <Icon guid="guidImages2" id="bmpPic1" />
+        <Strings>
+          <ButtonText>是否为纯数字/字母</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSelfVSIXProjectPackageCmdSet3" id="cmdidSelfCommand4" priority="0x0100" type="Button">
+        <Parent guid="guidSelfVSIXProjectPackageCmdSet3" id="MyMenuGroup" />
+        <Icon guid="guidImages3" id="bmpPic1" />
+        <Strings>
+          <ButtonText>补全变量</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+
+    <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
+    <Bitmaps>
+      <!--  The bitmap id is defined in a way that is a little bit different from the others:
+            the declaration starts with a guid for the bitmap strip, then there is the resource id of the
+            bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
+            inside a button definition. An important aspect of this declaration is that the element id
+            must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
+      <!--  16*16为一个icon，id为1，如果图片较大，则第二个16*16为第二个icon，id为2，以此类推，例如下: 
+            <Bitmap guid="guidImages" href="Resources\SelfCommand1.png" usedList="bmpPic1,bmpPic2"/>
+            透明图生成网址：http://ico.toolscat.com/
+      -->
+      <Bitmap guid="guidImages" href="Resources\zenze.ico" usedList="bmpPic1" />
+      <Bitmap guid="guidImages1" href="Resources\strlength.png" usedList="bmpPic1" />
+      <Bitmap guid="guidImages2" href="Resources\numorabc.png" usedList="bmpPic1" />
+      <Bitmap guid="guidImages3" href="Resources\buquancs.png" usedList="bmpPic1" />
+    </Bitmaps>
+  </Commands>
+
+  <!--配置快捷键
+      <KeyBinding guid="<name of command set>" id="<name of command id>">
+      如： 按住Control+1+1即是快捷键
+  -->
+  <KeyBindings>
+    <KeyBinding guid="guidSelfVSIXProjectPackageCmdSet" id="SelfCommand1Id" key1="1" mod1="CONTROL" key2="1" mod2="CONTROL" editor="guidVSStd97" />
+    <KeyBinding guid="guidSelfVSIXProjectPackageCmdSet1" id="cmdidSelfCommand2" key1="2" mod1="CONTROL" key2="2" mod2="CONTROL" editor="guidVSStd97" />
+    <KeyBinding guid="guidSelfVSIXProjectPackageCmdSet2" id="cmdidSelfCommand3" key1="3" mod1="CONTROL" key2="3" mod2="CONTROL" editor="guidVSStd97" />
+    <KeyBinding guid="guidSelfVSIXProjectPackageCmdSet3" id="cmdidSelfCommand4" key1="4" mod1="CONTROL" key2="4" mod2="CONTROL" editor="guidVSStd97" />
+  </KeyBindings>
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidSelfVSIXProjectPackage" value="{a1947d48-d552-4542-be80-8d5e29667c0a}" />
+
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="guidSelfVSIXProjectPackageCmdSet" value="{93d4d243-8331-475a-aead-f962c6e967f9}">
+      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="SelfCommand1Id" value="0x0100" />
+    </GuidSymbol>
+
+    <!--  多张16*16依此类推
+          <IDSymbol name="bmpPic2" value="2" />
+    -->
+    <GuidSymbol name="guidImages" value="{2289c900-339b-45b1-80b9-3889493ae0ac}">
+      <IDSymbol name="bmpPic1" value="1" />
+    </GuidSymbol>
+
+    <GuidSymbol value="{8ab0b9c2-630b-48f9-b0ea-cebea25eebc4}" name="guidSelfVSIXProjectPackageCmdSet1">
+      <IDSymbol value="4128" name="MyMenuGroup" />
+      <IDSymbol value="256" name="cmdidSelfCommand2" />
+    </GuidSymbol>
+
+    <GuidSymbol value="{0e26f892-002f-4c9c-864a-de74bcd3b639}" name="guidImages1">
+      <IDSymbol name="bmpPic1" value="1" />
+    </GuidSymbol>
+
+    <GuidSymbol value="{fc9cf163-e329-4ae6-a1a1-7a0b154aad7d}" name="guidSelfVSIXProjectPackageCmdSet2">
+      <IDSymbol value="4128" name="MyMenuGroup" />
+      <IDSymbol value="256" name="cmdidSelfCommand3" />
+    </GuidSymbol>
+
+    <GuidSymbol value="{5fe90ea3-c78b-4ad4-8f2b-75a2b1b77091}" name="guidImages2">
+      <IDSymbol name="bmpPic1" value="1" />
+    </GuidSymbol>
+
+    <GuidSymbol value="{b8cecac6-d457-491e-a942-d806e2db23ff}" name="guidSelfVSIXProjectPackageCmdSet3">
+      <IDSymbol value="4128" name="MyMenuGroup" />
+      <IDSymbol value="256" name="cmdidSelfCommand4" />
+    </GuidSymbol>
+
+    <GuidSymbol value="{7ff366db-d4f9-46c9-8c75-730ac5dc2e99}" name="guidImages3">
+      <IDSymbol name="bmpPic1" value="1" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
