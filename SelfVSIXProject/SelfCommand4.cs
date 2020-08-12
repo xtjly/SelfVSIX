@@ -98,7 +98,7 @@ namespace SelfVSIXProject
             //自定义功能
             //操作选中功能, 自动补全方法或属性或字段左边的变量 (.cs文件 )
             DTE dte = ServiceProvider.GetServiceAsync(typeof(DTE)).Result as DTE;
-            string selectTXT = string.Empty;
+            string newStr = string.Empty;
             if (dte?.ActiveDocument?.Name?.EndsWith(".cs", StringComparison.CurrentCultureIgnoreCase) ?? false)
             {
                 var selection = (TextSelection)dte.ActiveDocument.Selection;
@@ -112,27 +112,28 @@ namespace SelfVSIXProject
                     //3 StaticClass.Method();       只有补全var aaa = xxx;
                     //4 Method();
                     //5 new Class();
+                    newStr = $"var aaa = {curRowContent.TrimStart()}";
                     string matchStr = string.Empty;
                     //1. new Class().Method(); @Regex ^\s*new\s+\w+\s*\(\s*.*\s*\)\s*\.\s*\w+\s*\(\s*.*\s*\)\s*;\s*$
                     if (Regex.IsMatch(curRowContent, @"^\s*new\s+\w+\s*\(\s*.*\s*\)\s*\.\s*\w+\s*\(\s*.*\s*\)\s*;\s*$"))
                     {
-                        selection.Text = $"var aaa = {curRowContent}";
+                        selection.Text = newStr;
                     }
                     //2. obj.Method(); @Regex ^\s*\w+\s*\.\s*\w+\s*\(\s*.*\s*\)\s*;\s*$
                     //3. StaticClass.Method(); @Regex ^\s*\w+\s*\.\s*\w+\s*\(\s*.*\s*\)\s*;\s*$
                     else if (Regex.IsMatch(curRowContent, @"^\s*\w+\s*\.\s*\w+\s*\(\s*.*\s*\)\s*;\s*$"))
                     {
-                        selection.Text = $"var aaa = {curRowContent}";
+                        selection.Text = newStr;
                     }
                     //4. Method(); @Regex ^\s*\w+\s*\(\s*.*\s*\)\s*;\s*$
                     else if (Regex.IsMatch(curRowContent, @"^\s*\w+\s*\(\s*.*\s*\)\s*;\s*$"))
                     {
-                        selection.Text = $"var aaa = {curRowContent}";
+                        selection.Text = newStr;
                     }
                     //5. new Class(); @Regex ^\s*new\s*\w+\s*\(\s*.*\s*\)\s*;\s*$
                     else if (Regex.IsMatch(curRowContent, @"^\s*new\s*\w+\s*\(\s*.*\s*\)\s*;\s*$"))
                     {
-                        selection.Text = $"var aaa = {curRowContent}";
+                        selection.Text = newStr;
                     }
 
                 }
